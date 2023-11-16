@@ -1,20 +1,8 @@
 #include <iostream>
 #include <vector>
+#include "KDNode.h"
 
 using namespace std;
-const int k = 2;
-
-class KDNode
-{
-public:
-    int point[k];
-    KDNode *left;
-    KDNode *right;
-
-    KDNode() {
-        left = right = nullptr;
-    }
-};
 
 class KDTree
 {
@@ -117,3 +105,9 @@ int main()
 
     return 0;
 }
+
+// TO-DO: 
+// 1. Search
+// 2. Delete
+// 3. Nearest Neighbor
+// 4. Range Search

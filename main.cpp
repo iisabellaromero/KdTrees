@@ -58,6 +58,68 @@ public:
         return SearchNode(root->right, point, depth + 1);
     }
 
+    // Delete a point from the tree
+void DeletePoint(KDNode *&root, int point[], int depth)
+{
+    // Base Cases
+    if (root == nullptr)
+        return;
+
+    // Current dimension x=1, y=0 (for 2D)
+    int dim = depth % k;
+
+    // If the point to be deleted is smaller than the current root point, search it in the left subtree
+    if (point[dim] < root->point[dim])
+        DeletePoint(root->left, point, depth + 1);
+
+    // If the point to be deleted is greater than the current root point, search it in the right subtree
+    else if (point[dim] > root->point[dim])
+        DeletePoint(root->right, point, depth + 1);
+
+    // If the point to be deleted is the current root point
+    else
+    {
+        // If the node is a leaf node or has only a right child
+        if (root->left == nullptr)
+        {
+            KDNode *temp = root->right;
+            delete root;
+            root = temp; // Update the pointer to the right child or nullptr if there is no right child
+        }
+        // If the node has only a left child
+        else if (root->right == nullptr)
+        {
+            KDNode *temp = root->left;
+            delete root;
+            root = temp; // Update the pointer to the left child
+        }
+        // If the node has both left and right children
+        else
+        {
+            KDNode *temp = FindMin(root->right, dim);
+            *root->point = *temp->point;
+            DeletePoint(root->right, temp->point, depth + 1);
+        }
+    }
+}
+
+    // Find the node with minimum value in the dimension
+    KDNode *FindMin(KDNode *root, int d)
+    {
+        if (root == nullptr)
+            return nullptr;
+
+        KDNode *min = root;
+        KDNode *l = FindMin(root->left, d);
+        KDNode *r = FindMin(root->right, d);
+
+        if (l != nullptr && l->point[d] < min->point[d])
+            min = l;
+        if (r != nullptr && r->point[d] < min->point[d])
+            min = r;
+        return min;
+    }
+
     void display()
     {
         display(root, 0);
@@ -146,11 +208,17 @@ int main()
         cout << "Not found." << endl;
     }
 
+    KDNode *root = kdtree.getRoot();
+
+    cout << "Delete point (17,15): " << endl;
+    kdtree.DeletePoint(root, points[1], 0);
+    kdtree.display();
+
     return 0;
 }
 
 
 // TO-DO: 
-// 1. Delete
+// 1. Delete FUNCIONA PERO NO PARA EL ROOT ni para (13,15) por alguna razon
 // 2. Nearest Neighbor
 // 3. Range Search

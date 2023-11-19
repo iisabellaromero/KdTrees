@@ -38,6 +38,26 @@ public:
         return node->left;
     }
 
+        // Search a point in the tree
+    KDNode *SearchNode(KDNode *root, int point[], int depth)
+    {
+        // Base Cases
+        if (root == nullptr)
+            return nullptr;
+        if (arePointsSame(root->point, point))
+            return root;
+
+        // Current dimension x=1, y=0 (for 2D)
+        int dim = depth % k;
+
+        // If the point to be searched is smaller than the current root point, search it in the left subtree
+        if (point[dim] < root->point[dim])
+            return SearchNode(root->left, point, depth + 1);
+
+        // If the point to be searched is greater than the current root point, search it in the right subtree
+        return SearchNode(root->right, point, depth + 1);
+    }
+
     void display()
     {
         display(root, 0);
@@ -73,6 +93,17 @@ private:
         return root;
     }
 
+    // Check if two points are the same
+    bool arePointsSame(int point1[], int point2[])
+    {
+        // Compare individual pointinate values
+        for (int i = 0; i < k; ++i)
+            if (point1[i] != point2[i])
+                return false;
+
+        return true;
+    }
+
     // Display
     void display(KDNode *root, int depth){
         if (root == nullptr)
@@ -93,21 +124,33 @@ int main()
     KDTree kdtree;
 
     // Sample points
-    int points[][k] = {{3, 6}, {17, 15}, {13, 15}, {6, 12}, {9, 1}, {2, 7}, {10, 19}};
+    int points[][2] = {{3, 6}, {17, 15}, {13, 15}, {6, 12}, {9, 1}, {2, 7}, {10, 19}};
 
     // Insert points into the k-d tree
-    for (int i = 0; i < sizeof(points) / sizeof(points[0]); ++i){
+    for (int i = 0; i < sizeof(points) / sizeof(points[0]); ++i)
+    {
         kdtree.insert(points[i]);
     }
-    
+
     kdtree.display();
-    
+
+    cout << "Search for point (3, 6): " << endl;
+    KDNode *result = kdtree.SearchNode(kdtree.getRoot(), points[0], 0);
+
+    if (result != nullptr)
+    {
+        cout << "Found: (" << result->point[0] << ", " << result->point[1] << ")" << endl;
+    }
+    else
+    {
+        cout << "Not found." << endl;
+    }
 
     return 0;
 }
 
+
 // TO-DO: 
-// 1. Search
-// 2. Delete
-// 3. Nearest Neighbor
-// 4. Range Search
+// 1. Delete
+// 2. Nearest Neighbor
+// 3. Range Search

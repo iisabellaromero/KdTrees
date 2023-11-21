@@ -65,8 +65,8 @@ void DeletePoint(KDNode *&root, int point[], int depth)
     if (root == nullptr)
         return;
 
-    // Current dimension x=1, y=0 (for 2D)
-    int dim = depth % k;
+    // Current dimension
+    int dim = ((depth+1) % k);
 
     // If the point to be deleted is smaller than the current root point, search it in the left subtree
     if (point[dim] < root->point[dim])
@@ -98,7 +98,7 @@ void DeletePoint(KDNode *&root, int point[], int depth)
         {
             KDNode *temp = FindMin(root->right, dim);
             *root->point = *temp->point;
-            DeletePoint(root->right, temp->point, depth + 1);
+            DeletePoint(root->right, temp->point, ((depth + 1)%k));
         }
     }
 }
@@ -119,6 +119,13 @@ void DeletePoint(KDNode *&root, int point[], int depth)
             min = r;
         return min;
     }
+
+        // Nearest Neighbor
+    KDNode *NearestNeighbor(KDNode *root, int point[]) {
+        if (root == nullptr) return nullptr;
+        return NearestNeighborHelper(root, point, 0, INT_MAX, nullptr);
+    }
+
 
     void display()
     {
@@ -164,6 +171,40 @@ private:
                 return false;
 
         return true;
+    }
+
+    // Nearest Neighbor Helper
+    KDNode *NearestNeighborHelper(KDNode *root, int point[], int depth, int nearest, KDNode *nearestNode) {
+        if (root == nullptr) return nearestNode;
+
+        int dim = depth % k;
+        KDNode *nextBranch = (point[dim] < root->point[dim]) ? root->left : root->right;
+        KDNode *otherBranch = (nextBranch == root->left) ? root->right : root->left;
+
+        // Search in the next branch
+        nearestNode = NearestNeighborHelper(nextBranch, point, depth + 1, nearest, nearestNode);
+
+        // Check distance to current node
+        int currentDist = calculateDistance(root->point, point);
+
+        // Update nearestNode if the current node is closer
+        if (currentDist < nearest) {
+            nearest = currentDist;
+            nearestNode = root;
+        }
+
+        nearestNode = NearestNeighborHelper(otherBranch, point, depth + 1, nearest, nearestNode);
+
+        return nearestNode;
+    }
+
+    // Calculate distance between two points
+    int calculateDistance(int point1[], int point2[]) {
+        int distance = 0;
+        for (int i = 0; i < k; ++i) {
+            distance += (point1[i] - point2[i]) * (point1[i] - point2[i]);
+        }
+        return distance;
     }
 
     // Display
@@ -214,11 +255,16 @@ int main()
     kdtree.DeletePoint(root, points[1], 0);
     kdtree.display();
 
+    cout << "Nearest Neighbor to (17,15): " << endl;
+    KDNode *nearest = kdtree.NearestNeighbor(root, points[1]);
+    cout << "Found: (" << nearest->point[0] << ", " << nearest->point[1] << ")" << endl;
+    //should be (13,15)
+
     return 0;
 }
 
 
 // TO-DO: 
-// 1. Delete FUNCIONA PERO NO PARA EL ROOT ni para (13,15) por alguna razon
-// 2. Nearest Neighbor
+// 1. Delete FUNCIONA PERO NO PARA ALGUNOS CASOS
+// 2. Nearest Neighbor Algo no me convence
 // 3. Range Search

@@ -16,6 +16,7 @@ int main(){
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(0, 100000000);
 
+    int point1[2] = {dis(gen), dis(gen)};
 
     for (int i = 10; i < 100000000; i *= 10){
 
@@ -55,8 +56,6 @@ int main(){
         //KDtree::display(root, 0);
 
         // Test nearest neighbor
-        // Select random point
-        int point1[2] = {dis(gen), dis(gen)};
         KDTreeNode* nearest = KDtree::nearestNeighbor(root, point1);
         std::cout << "Nearest neighbor to (" << point1[0] << ", " << point1[1] << "): (" << nearest->dataPoint[0] << ", " << nearest->dataPoint[1] << ")" << std::endl;
 
@@ -96,9 +95,9 @@ int main(){
         }
 
         // Test nearest neighbor
-        int point13[2] = {dis(gen), dis(gen)};
-        QuadTreeNode* nearest2 = quad->nearestNeighbor(QuadPoint(2, 3), point13, point13);
-        std::cout << "Nearest neighbor to (" << point13[0] << ", " << point13[1] << "): (" << nearest2->dataPoint.coordinates[0] << ", " << nearest2->dataPoint.coordinates[1] << ")" << std::endl;
+
+        QuadTreeNode* nearest2 = quad->nearestNeighbor(QuadPoint(point1[0], point1[1]), quad->bottomLeft.coordinates, quad->topRight.coordinates);
+        std::cout << "Nearest neighbor to (" << point1[0] << ", " << point1[1] << "): (" << nearest2->dataPoint.coordinates[0] << ", " << nearest2->dataPoint.coordinates[1] << ")" << std::endl;
 
         // Test search
         bool found2 = quad->search(QuadPoint(points[0][0], points[0][1]));

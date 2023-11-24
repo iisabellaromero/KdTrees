@@ -1,6 +1,3 @@
-//
-// Created by MacBookPro on 23/11/23.
-//
 #include "kdtree.h"
 #include "quadtree.h"
 #include <iostream>

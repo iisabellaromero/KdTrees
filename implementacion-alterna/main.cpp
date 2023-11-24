@@ -5,11 +5,21 @@
 #import "quadtree.h"
 #import <iostream>
 #import <fstream>
+#import <chrono>
 
 using namespace std;
 
 int main(){
+
+    // Init chrono
+    auto start = chrono::high_resolution_clock::now();
+    auto finish = chrono::high_resolution_clock::now();
+    chrono::duration<double> elapsed = finish - start;
+
     //Test the kdtree
+    // Start timer
+    start = chrono::high_resolution_clock::now();
+
     KDTreeNode* root = nullptr;
     int point1[5] = {3, 6};
     int point2[5] = {17, 15};
@@ -50,9 +60,27 @@ int main(){
     else
         cout << "Did not find point (1, 2)" << endl;
 
-    //test quadtree
+    // Stop timer
+    finish = chrono::high_resolution_clock::now();
+
+    // Print elapsed time
+    elapsed = finish - start;
+    cout << "Elapsed time: " << elapsed.count() << " s" << endl << endl;
+
+    // Test the quadtree
+    // Start timer
+    start = chrono::high_resolution_clock::now();
+
+    // We reuse the points from the kdtree
 
 
+
+    // Stop timer
+    finish = chrono::high_resolution_clock::now();
+
+    // Print elapsed time
+    elapsed = finish - start;
+    cout << "Elapsed time: " << elapsed.count() << " s" << endl << endl;
 
     return 0;
 }

@@ -61,11 +61,11 @@ public:
         return searchNode(root, dataPoint, 0);
     }
 
-    static KDTreeNode* nearestNeighbour(KDTreeNode* root, int dataPoint[]) {
-        return searchNearestNeighbour(root, dataPoint, std::numeric_limits<double>::max(), root);
+    static KDTreeNode* nearestNeighbor(KDTreeNode* root, int dataPoint[]) {
+        return searchNearestNeighbor(root, dataPoint, std::numeric_limits<double>::max(), root);
     }
 
-    static KDTreeNode* searchNearestNeighbour(KDTreeNode* root, int dataPoint[], double minDist, KDTreeNode* bestNode) {
+    static KDTreeNode* searchNearestNeighbor(KDTreeNode* root, int dataPoint[], double minDist, KDTreeNode* bestNode) {
         if (root == nullptr)
             return bestNode;
 
@@ -75,14 +75,14 @@ public:
             bestNode = root;
         }
         if (root->left == nullptr)
-            return searchNearestNeighbour(root->right, dataPoint, minDist, bestNode);
+            return searchNearestNeighbor(root->right, dataPoint, minDist, bestNode);
         if (root->right == nullptr)
-            return searchNearestNeighbour(root->left, dataPoint, minDist, bestNode);
+            return searchNearestNeighbor(root->left, dataPoint, minDist, bestNode);
 
         if (euclideanDistance(root->left->dataPoint, dataPoint) < euclideanDistance(root->right->dataPoint, dataPoint))
-            bestNode = searchNearestNeighbour(root->left, dataPoint, minDist, bestNode);
+            bestNode = searchNearestNeighbor(root->left, dataPoint, minDist, bestNode);
         else
-            bestNode = searchNearestNeighbour(root->right, dataPoint, minDist, bestNode);
+            bestNode = searchNearestNeighbor(root->right, dataPoint, minDist, bestNode);
         return bestNode;
     }
 

@@ -30,7 +30,7 @@ int main(){
 
     //test nearest neighbor
     int point8[2] = {2, 3};
-    KDTreeNode* nearest = KDtree::nearestNeighbour(root, point3);
+    KDTreeNode* nearest = KDtree::nearestNeighbor(root, point3);
     std::cout << "Nearest neighbor to (17,15): (" << nearest->dataPoint[0] << ", " << nearest->dataPoint[1] << ")" << std::endl;
 
     //test search

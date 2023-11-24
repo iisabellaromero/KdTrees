@@ -7,8 +7,8 @@
 
 class KDTreeNode {
 public:
-    int dataPoint[5];
-    static const int DIMENSION = 5; // dos dimensiones
+    int dataPoint[2];
+    static const int DIMENSION = 2; // dos dimensiones
 
     KDTreeNode* left;
     KDTreeNode* right;

@@ -16,6 +16,14 @@ int main(){
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(0, 100000000);
 
+    std::cout << "Deseas realizar: " << std::endl;
+    std::cout << "1. Prueba de insercion" << std::endl;
+    std::cout << "2. Prueba de busqueda" << std::endl;
+    std::cout << "3. Prueba completa" << std::endl;
+
+    int opcion;
+    std::cin >> opcion;
+
     int point1[2] = {dis(gen), dis(gen)};
 
     for (int i = 10; i < 100000000; i *= 10){
@@ -42,8 +50,10 @@ int main(){
 
         std::cout << "Testing KDTree" << std::endl;
 
-        // Start timer
-        begin = std::chrono::steady_clock::now();
+        // Start timer (if test is insertion test or complete test)
+        if (opcion == 1 || opcion == 3) {
+            begin = std::chrono::steady_clock::now();
+        }
 
         KDTreeNode* root = nullptr;
 
@@ -52,24 +62,38 @@ int main(){
             root = KDtree::insert(root, points[j]);
         }
 
-        // For debug
-        //KDtree::display(root, 0);
+        // If test is search test, start timer here and end timer if it's insertion test
+        if (opcion == 2) {
+            begin = std::chrono::steady_clock::now();
+        }
+        else if (opcion == 1) {
+            end = std::chrono::steady_clock::now();
+        }
 
-        // Test nearest neighbor
-        KDTreeNode* nearest = KDtree::nearestNeighbor(root, point1);
-        std::cout << "Nearest neighbor to (" << point1[0] << ", " << point1[1] << "): (" << nearest->dataPoint[0] << ", " << nearest->dataPoint[1] << ")" << std::endl;
+        if (opcion != 1) {
 
-        // Test search
-        int point2[2] = {points[0][0], points[0][1]};
-        bool found = KDtree::search(root, point2);
+            // For debug
+            //KDtree::display(root, 0);
 
-        if (found)
-            std::cout << "Found point (" << points[0][0] << ", " << points[0][1] << ")" << std::endl;
-        else
-            std::cout << "Did not find point (" << points[0][0] << ", " << points[0][1] << ")" << std::endl;
+            // Test nearest neighbor
+            KDTreeNode *nearest = KDtree::nearestNeighbor(root, point1);
+            std::cout << "Nearest neighbor to (" << point1[0] << ", " << point1[1] << "): (" << nearest->dataPoint[0]
+                      << ", " << nearest->dataPoint[1] << ")" << std::endl;
 
-        // End timer
-        end = std::chrono::steady_clock::now();
+            // Test search
+            int point2[2] = {points[0][0], points[0][1]};
+            bool found = KDtree::search(root, point2);
+
+            if (found) {
+                std::cout << "Found point (" << points[0][0] << ", " << points[0][1] << ")" << std::endl;
+            } else {
+                std::cout << "Did not find point (" << points[0][0] << ", " << points[0][1] << ")" << std::endl;
+            }
+
+            // End timer if test is not insertion test
+
+            end = std::chrono::steady_clock::now();
+        }
 
         // Calculate time
         time_span = std::chrono::duration_cast<std::chrono::duration<double>>(end - begin);
@@ -81,8 +105,11 @@ int main(){
 
         std::cout << "Testing QuadTree" << std::endl;
 
-        // Start timer
-        begin = std::chrono::steady_clock::now();
+        // Start timer if test is insertion test or complete test
+
+        if (opcion == 1 || opcion == 3) {
+            begin = std::chrono::steady_clock::now();
+        }
 
         QuadPoint topLeft = QuadPoint(0, 0);
         QuadPoint botRight = QuadPoint(100000000, 100000000);
@@ -94,21 +121,35 @@ int main(){
             quad->insert(node);
         }
 
-        // Test nearest neighbor
+        // If test is search test, start timer here
+        if (opcion == 2) {
+            begin = std::chrono::steady_clock::now();
+        }
+        else if (opcion == 1) {
+            end = std::chrono::steady_clock::now();
+        }
 
-        QuadTreeNode* nearest2 = quad->nearestNeighbor(QuadPoint(point1[0], point1[1]), quad->bottomLeft.coordinates, quad->topRight.coordinates);
-        std::cout << "Nearest neighbor to (" << point1[0] << ", " << point1[1] << "): (" << nearest2->dataPoint.coordinates[0] << ", " << nearest2->dataPoint.coordinates[1] << ")" << std::endl;
+        if (opcion != 1) {
 
-        // Test search
-        bool found2 = quad->search(QuadPoint(points[0][0], points[0][1]));
+            // Test nearest neighbor
 
-        if (found2)
-            std::cout << "Found point (" << points[0][0] << ", " << points[0][1] << ")" << std::endl;
-        else
-            std::cout << "Did not find point (" << points[0][0] << ", " << points[0][1] << ")" << std::endl;
+            QuadTreeNode *nearest2 = quad->nearestNeighbor(QuadPoint(point1[0], point1[1]),
+                                                           quad->bottomLeft.coordinates, quad->topRight.coordinates);
+            std::cout << "Nearest neighbor to (" << point1[0] << ", " << point1[1] << "): ("
+                      << nearest2->dataPoint.coordinates[0] << ", " << nearest2->dataPoint.coordinates[1] << ")"
+                      << std::endl;
 
-        // End timer
-        end = std::chrono::steady_clock::now();
+            // Test search
+            bool found2 = quad->search(QuadPoint(points[0][0], points[0][1]));
+
+            if (found2)
+                std::cout << "Found point (" << points[0][0] << ", " << points[0][1] << ")" << std::endl;
+            else
+                std::cout << "Did not find point (" << points[0][0] << ", " << points[0][1] << ")" << std::endl;
+
+            // End timer if test is not insertion test
+            end = std::chrono::steady_clock::now();
+        }
 
         // Calculate time
         time_span = std::chrono::duration_cast<std::chrono::duration<double>>(end - begin);

@@ -10,7 +10,9 @@
     <option name="reloaded" value="true" />
   </component>
   <component name="CMakeRunConfigurationManager">
-    <generated />
+    <generated>
+      <config projectName="ChronoTests" targetName="ChronoTests" />
+    </generated>
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -19,12 +21,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6c26ffcd-e5d2-4b87-92e8-d589e9d9a464" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/KdTrees.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KDNode.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/KdTrees.code-workspace" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/implementacion-alterna/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/implementacion-alterna/.idea/implementacion-alterna.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/implementacion-alterna/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/implementacion-alterna/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/implementacion-alterna/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/implementacion-alterna/kdnode.h" beforeDir="false" afterPath="$PROJECT_DIR$/kdnode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/implementacion-alterna/kdtree.h" beforeDir="false" afterPath="$PROJECT_DIR$/kdtree.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/implementacion-alterna/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/QuadvsKDTests.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/implementacion-alterna/programa" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/implementacion-alterna/quadnode.h" beforeDir="false" afterPath="$PROJECT_DIR$/quadnode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/implementacion-alterna/quadtree.h" beforeDir="false" afterPath="$PROJECT_DIR$/quadtree.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/programa" beforeDir="false" afterPath="$PROJECT_DIR$/programa" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,6 +84,7 @@
     "WebServerToolWindowFactoryState": "false",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "implementacion-alterna",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -81,23 +93,17 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\USUARIO\OneDrive\Documentos\Ciclo4\Algoritmos y Estructuras de Datos\KD-Trees\KdTrees" />
+    </key>
+  </component>
   <component name="RunManager">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+    <configuration name="ChronoTests" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ChronoTests" TARGET_NAME="ChronoTests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ChronoTests" RUN_TARGET_NAME="ChronoTests">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="main.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="KdTrees" TARGET_NAME="main.cpp" CONFIG_NAME="main.cpp">
-      <option name="sourceFile" value="implementacion-alterna\main.cpp" />
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="C/C++ File.main.cpp" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -110,7 +116,8 @@
       <workItem from="1700679741907" duration="300000" />
       <workItem from="1700680054986" duration="884000" />
       <workItem from="1700703465900" duration="1000000" />
-      <workItem from="1700783331296" duration="1540000" />
+      <workItem from="1700783331296" duration="11082000" />
+      <workItem from="1700799420906" duration="614000" />
     </task>
     <servers />
   </component>

@@ -61,13 +61,13 @@ int main(){
         std::cout << "Nearest neighbor to (" << point1[0] << ", " << point1[1] << "): (" << nearest->dataPoint[0] << ", " << nearest->dataPoint[1] << ")" << std::endl;
 
         // Test search
-        int point2[2] = {1, 2};
+        int point2[2] = {points[0][0], points[0][1]};
         bool found = KDtree::search(root, point2);
 
         if (found)
-            std::cout << "Found point (1, 2)" << std::endl;
+            std::cout << "Found point (" << points[0][0] << ", " << points[0][1] << ")" << std::endl;
         else
-            std::cout << "Did not find point (1, 2)" << std::endl;
+            std::cout << "Did not find point (" << points[0][0] << ", " << points[0][1] << ")" << std::endl;
 
         // End timer
         end = std::chrono::steady_clock::now();
@@ -96,17 +96,17 @@ int main(){
         }
 
         // Test nearest neighbor
-        int point13[2] = {1, 2};
+        int point13[2] = {dis(gen), dis(gen)};
         QuadTreeNode* nearest2 = quad->nearestNeighbor(QuadPoint(2, 3), point13, point13);
-        std::cout << "Nearest neighbor to (2, 3): (" << nearest2->dataPoint.coordinates[0] << ", " << nearest2->dataPoint.coordinates[1] << ")" << std::endl;
+        std::cout << "Nearest neighbor to (" << point13[0] << ", " << point13[1] << "): (" << nearest2->dataPoint.coordinates[0] << ", " << nearest2->dataPoint.coordinates[1] << ")" << std::endl;
 
         // Test search
-        bool found2 = quad->search(QuadPoint(1, 2));
+        bool found2 = quad->search(QuadPoint(points[0][0], points[0][1]));
 
         if (found2)
-            std::cout << "Found point (1, 2)" << std::endl;
+            std::cout << "Found point (" << points[0][0] << ", " << points[0][1] << ")" << std::endl;
         else
-            std::cout << "Did not find point (1, 2)" << std::endl;
+            std::cout << "Did not find point (" << points[0][0] << ", " << points[0][1] << ")" << std::endl;
 
         // End timer
         end = std::chrono::steady_clock::now();

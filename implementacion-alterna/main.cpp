@@ -6,16 +6,18 @@
 #import <iostream>
 #import <fstream>
 
+using namespace std;
+
 int main(){
     //Test the kdtree
     KDTreeNode* root = nullptr;
-    int point1[2] = {3, 6};
-    int point2[2] = {17, 15};
-    int point3[2] = {13, 15};
-    int point4[2] = {6, 12};
-    int point5[2] = {9, 1};
-    int point6[2] = {2, 7};
-    int point7[2] = {10, 19};
+    int point1[5] = {3, 6, 2, 1, 4};
+    int point2[5] = {17, 15, 8, 9, 10};
+    int point3[5] = {13, 15, 3, 5, 7};
+    int point4[5] = {6, 12, 4, 6, 8};
+    int point5[5] = {9, 1, 5, 7, 9};
+    int point6[5] = {2, 7, 6, 8, 10};
+    int point7[5] = {10, 19, 7, 9, 11};
 
     root = KDtree::insert(root, point1);
     root = KDtree::insert(root, point2);
@@ -29,18 +31,18 @@ int main(){
     KDtree::display(root, 0);
 
     //test nearest neighbor
-    int point8[2] = {2, 3};
-    KDTreeNode* nearest = KDtree::nearestNeighbour(root, point3);
-    std::cout << "Nearest neighbor to (17,15): (" << nearest->dataPoint[0] << ", " << nearest->dataPoint[1] << ")" << std::endl;
+    int point8[5] = {2, 3, 4, 5, 6};
+    KDTreeNode* nearest = KDtree::nearestNeighbor(root, point3);
+    cout << "Nearest neighbor to (17, 15, 8, 9, 10): (" << nearest->dataPoint[0] << ", " << nearest->dataPoint[1] << "," << nearest->dataPoint[2] << "," << nearest->dataPoint[3] << "," << nearest->dataPoint[4] << ")" << endl;
 
     //test search
-    int point9[2] = {1, 2};
-    bool found = KDtree::search(root, point7);
+    int point9[5] = {1, 2, 3, 4, 5};
+    bool found = KDtree::search(root, point9);
 
     if (found)
-        std::cout << "Found point (1, 2)" << std::endl;
+        cout << "Found point (1, 2, 3, 4, 5)" << endl;
     else
-        std::cout << "Did not find point (1, 2)" << std::endl;
+        cout << "Did not find point (1, 2, 3, 4, 5)" << endl;
 
     //test quadtree
 

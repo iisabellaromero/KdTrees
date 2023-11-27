@@ -109,3 +109,19 @@ class KDTreeOperations {
       return Math.sqrt((b[1] - a[1]) * (b[1] - a[1]) + (b[0] - a[0]) * (b[0] - a[0]));
     }
   }
+
+
+  // test 
+  const kdTree = new KDTree();
+  kdTree.insert([3, 6]);
+  kdTree.insert([17, 15]);
+  kdTree.insert([13, 15]);
+  kdTree.insert([6, 12]);
+  kdTree.insert([9, 1]);
+  kdTree.insert([2, 7]);
+
+  console.log(kdTree.search([6, 12]));
+
+  //nearest neighbour
+  console.log(kdTree.nearestNeighbour([11,12]))
+

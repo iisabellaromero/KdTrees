@@ -27,6 +27,9 @@ function NumberInputButton() {
       <div className="numberInput">
         <input type="text" placeholder="Ingresa un número" />
       </div>
+      <div className="numberInput">
+        <input type="text" placeholder="Ingresa un número" />
+      </div>
       <div className="button">
         <button type="submit">Enviar</button>
       </div>
@@ -39,7 +42,6 @@ function App() {
 
     <div className="App">
       <Grid num={6} />
-      <NumberInputButton />
       <NumberInputButton />
     </div>
   );

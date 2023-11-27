@@ -125,3 +125,5 @@ class KDTreeOperations {
   //nearest neighbour
   console.log(kdTree.nearestNeighbour([11,12]))
 
+
+

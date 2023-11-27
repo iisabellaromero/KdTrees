@@ -41,7 +41,13 @@
 .square{
   width: 100px;
   height: 100px;
-  background-color: #555;
-  margin: 10px;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+  border: 1px solid black;
   display: inline-block;
+}
+
+.row{
+  margin: 0;
 }

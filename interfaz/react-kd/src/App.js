@@ -21,7 +21,6 @@ function Grid({ num }) {
   return <div className="grid">{rows}</div>;
 }
 
-
 function NumberInputButton() {
   return (
     <div className="numberInputButton">
@@ -34,7 +33,6 @@ function NumberInputButton() {
     </div>
   );
 }
-
 
 function App() {
   return (

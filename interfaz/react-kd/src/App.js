@@ -1,28 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useCallback } from 'react';
-// import Board from './components/board'
-import { useState } from 'react';
-import { useEffect } from 'react';
-
+import React, { useState, useEffect } from 'react';
 class KDTree{
   constructor(){
       this.root = null;
   }
-
   insert(dataPoint){
       this.root = KDTreeOperations.insert(this.root, dataPoint);
   }
-
   search(dataPoint){
       return KDTreeOperations.search(this.root, dataPoint);
   }
-
-  nearestNeighbour(dataPoint){
-      return KDTreeOperations.nearestNeighbour(this.root, dataPoint);
+  nearestNeighbour(dataPoint) {
+    return KDTreeOperations.nearestNeighbour(this.root, dataPoint);
   }
 }
-
 class KDTreeNode {
   constructor(point) {
       this.dataPoint = new Array(2);
@@ -33,9 +25,7 @@ class KDTreeNode {
       this.right = null;
   }
 }
-
 KDTreeNode.DIMENSION = 2;
-
 class KDTreeOperations {
   static insertNode(root, dataPoint, depth) {
     if (root === null) {
@@ -49,11 +39,9 @@ class KDTreeOperations {
     }
     return root;
   }
-
   static insert(root, dataPoint) {
     return KDTreeOperations.insertNode(root, dataPoint, 0);
   }
-
   static arePointsEqual(point1, point2) {
     for (let i = 0; i < KDTreeNode.DIMENSION; ++i) {
       if (point1[i] !== point2[i]) {
@@ -62,11 +50,9 @@ class KDTreeOperations {
     }
     return true;
   }
-
   static search(root, dataPoint) {
     return KDTreeOperations.searchNode(root, dataPoint, 0);
   }
-
   static searchNode(root, dataPoint, depth) {
     if (root === null) {
       return false;
@@ -81,11 +67,9 @@ class KDTreeOperations {
       return KDTreeOperations.searchNode(root.right, dataPoint, depth + 1);
     }
   }
-
   static nearestNeighbour(root, dataPoint) {
     return KDTreeOperations.searchNearestNeighbour(root, dataPoint, Number.MAX_VALUE, root);
   }
-
   static searchNearestNeighbour(root, dataPoint, minDist, bestNode) {
     if (root === null) {
       return bestNode;
@@ -108,7 +92,6 @@ class KDTreeOperations {
     }
     return bestNode;
   }
-
   static euclidianDistance(a, b) {
     if (a === null || b === null) {
       return Number.MAX_VALUE;
@@ -116,28 +99,26 @@ class KDTreeOperations {
     return Math.sqrt((b[1] - a[1]) * (b[1] - a[1]) + (b[0] - a[0]) * (b[0] - a[0]));
   }
 }
-
-
 function Grid({ num }) {
   const [kdTreeNodes, setKDTreeNodes] = useState([]);
   const [xdivisiveLines, setXdivisiveLines] = useState([]);
   const [ydivisveLines, setYdivisiveLines] = useState([]);
-
+  const [nearestNeighbour, setNearestNeighbour] = useState([]);
   useEffect(() => {
     const kdTree = new KDTree();
     kdTree.insert([1, 1]);
     kdTree.insert([10, 2]);
     kdTree.insert([3, 6]);
     kdTree.insert([17, 15]);
-
-
     const nodes = [];
     const lines = [];
-
     // Function to traverse the KD tree and collect nodes and divisive lines for visualization
     const traverseKDTree = (node) => {
       if (node) {
-        nodes.push({ x: node.dataPoint[0], y: node.dataPoint[1], isDivisive: node.left || node.right });
+        nodes.push({ x: node.dataPoint[0], 
+          y: node.dataPoint[1], 
+          isDivisive: node.left || node.right,
+          nearestNeighbour: kdTree.nearestNeighbour([node.dataPoint[0], node.dataPoint[1]]) });
         if (node.left || node.right) {
           lines.push(node.dataPoint[0]);
         }
@@ -145,17 +126,22 @@ function Grid({ num }) {
         traverseKDTree(node.right);
       }
     };
-
-    traverseKDTree(kdTree.root);
+    const nearestNeighbour = kdTree.nearestNeighbour([13, 15]);
+    console.log("nearestNeighbour", nearestNeighbour);
+    traverseKDTree(kdTree.root, nearestNeighbour);
     setKDTreeNodes(nodes);
     setXdivisiveLines(lines);
     setYdivisiveLines(lines);
+    setNearestNeighbour(nearestNeighbour);
   }, [num]);
 
   const [gridItems, setGridItems] = useState([]);
 
+
   useEffect(() => {
     const rows = [];
+    // Busca el nodo más cercano solo después de que la recursión ha terminado
+    const nearestNeighbour2 = kdTreeNodes.find(node => node.nearestNeighbour); // Obtén nearestNeighbour2 antes del loop
     for (let i = 0; i < num; i++) {
       const squares = [];
       for (let j = 0; j < num; j++) {
@@ -166,9 +152,10 @@ function Grid({ num }) {
         squares.push(
           <div
             key={`${i}-${j}`}
-            className={`square ${isKDTreeNode ? 'kdTreeNode' : ''}`}
+            className={`square ${isKDTreeNode ? 'kdTreeNode' : ''} ${nearestNeighbour2 ? 'nearestNeighbour' : ''}`}
             style={{
-              backgroundColor: isKDTreeNode ? 'green' : 'white',
+              //if its a kdtree node but not the nearest neighbour, color it green
+              backgroundColor: (isKDTreeNode && !nearestNeighbour2) ? 'green' : ((isKDTreeNode && nearestNeighbour2) ? 'blue' : 'white'),
               borderRight: isYDivisiveLine ? '2px solid red' : 'none',
               borderBottom: isXDivisiveLine ? '2px solid red' : 'none',
             }}
@@ -177,86 +164,14 @@ function Grid({ num }) {
       }
       rows.push(
         <div key={i} className="row">
-          {squares}
-        </div>
+	@@ -192,8 +193,8 @@ function Grid({ num }) {
       );
     }
     setGridItems(rows);
   }, [num, kdTreeNodes, xdivisiveLines]);
-
+  
   return <div className="grid">{gridItems}</div>;
 }
-
-
-//input button
-function NumberInputButton({texto}) {
-  const [numOne, setNumOne] = useState(''); // State for the first input value
-  const [numTwo, setNumTwo] = useState(''); // State for the second input value
-
-
-  const handleCoordinateSubmit = () => {
-    const xCoordinate = parseInt(numOne);
-    const yCoordinate = parseInt(numTwo);
-
-    if (!isNaN(xCoordinate) && !isNaN(yCoordinate)) {
-      console.log(`Entered coordinate: (${xCoordinate}, ${yCoordinate})`);
-      
-    } else {
-      console.log('Please enter valid numbers for both coordinates.');
-    }
-  };
-
-  return (
-    <div className="numberInputButton">
-      <div className="numberInput">
-        <h1>{texto}</h1>
-        <input
-          type="text"
-          placeholder="Coordenada x"
-          value={numOne}
-          onChange={(e) => setNumOne(e.target.value)}
-        />
-      </div>
-      <div className="numberInput">
-        <input
-          type="text"
-          placeholder="Coordenada y"
-          value={numTwo}
-          onChange={(e) => setNumTwo(e.target.value)}
-        />
-      </div>
-      <div className="button">
-        <button type="button" onClick={handleCoordinateSubmit}>
-          Submit
-        </button>
-      </div>
-    </div>
-  );
-}
-
-
-function App() {
-  return (
-    <div className="App">
-          <div className='row'>
-        <div className='col'>
-        <Grid num={20} />
-
-        </div>
-        <div className='col'>
-        <NumberInputButton texto={'Encontrar nearest neighbour'}/>
-        <NumberInputButton texto={'Probar search'}/>
-        </div>
-
-      </div>
-      
-    </div>
-  );
-}
-
-
-export default App;
-
 
 
 

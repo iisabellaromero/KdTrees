@@ -5,22 +5,173 @@ import React, { useCallback } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-function Grid({ num, x, y }) {
-  // Create rows and squares dynamically using nested loops
+class KDTree{
+  constructor(){
+      this.root = null;
+  }
+
+  insert(dataPoint){
+      this.root = KDTreeOperations.insert(this.root, dataPoint);
+  }
+
+  search(dataPoint){
+      return KDTreeOperations.search(this.root, dataPoint);
+  }
+
+  nearestNeighbour(dataPoint){
+      return KDTreeOperations.nearestNeighbour(this.root, dataPoint);
+  }
+}
+
+class KDTreeNode {
+  constructor(point) {
+      this.dataPoint = new Array(2);
+      for (let i = 0; i < point.length; i++) {
+          this.dataPoint[i] = point[i];
+      }
+      this.left = null;
+      this.right = null;
+  }
+}
+
+KDTreeNode.DIMENSION = 2;
+
+class KDTreeOperations {
+  static insertNode(root, dataPoint, depth) {
+    if (root === null) {
+      return new KDTreeNode(dataPoint);
+    }
+    const currentDimension = depth % KDTreeNode.DIMENSION;
+    if (dataPoint[currentDimension] < root.dataPoint[currentDimension]) {
+      root.left = KDTreeOperations.insertNode(root.left, dataPoint, depth + 1);
+    } else {
+      root.right = KDTreeOperations.insertNode(root.right, dataPoint, depth + 1);
+    }
+    return root;
+  }
+
+  static insert(root, dataPoint) {
+    return KDTreeOperations.insertNode(root, dataPoint, 0);
+  }
+
+  static arePointsEqual(point1, point2) {
+    for (let i = 0; i < KDTreeNode.DIMENSION; ++i) {
+      if (point1[i] !== point2[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  static search(root, dataPoint) {
+    return KDTreeOperations.searchNode(root, dataPoint, 0);
+  }
+
+  static searchNode(root, dataPoint, depth) {
+    if (root === null) {
+      return false;
+    }
+    if (KDTreeOperations.arePointsEqual(root.dataPoint, dataPoint)) {
+      return true;
+    }
+    const currentDimension = depth % KDTreeNode.DIMENSION;
+    if (dataPoint[currentDimension] < root.dataPoint[currentDimension]) {
+      return KDTreeOperations.searchNode(root.left, dataPoint, depth + 1);
+    } else {
+      return KDTreeOperations.searchNode(root.right, dataPoint, depth + 1);
+    }
+  }
+
+  static nearestNeighbour(root, dataPoint) {
+    return KDTreeOperations.searchNearestNeighbour(root, dataPoint, Number.MAX_VALUE, root);
+  }
+
+  static searchNearestNeighbour(root, dataPoint, minDist, bestNode) {
+    if (root === null) {
+      return bestNode;
+    }
+    const distanceFromNode = KDTreeOperations.euclidianDistance(root.dataPoint, dataPoint);
+    if (KDTreeOperations.euclidianDistance(root.dataPoint, dataPoint) < minDist) {
+      minDist = distanceFromNode;
+      bestNode = root;
+    }
+    if (root.left === null) {
+      return KDTreeOperations.searchNearestNeighbour(root.right, dataPoint, minDist, bestNode);
+    }
+    if (root.right === null) {
+      return KDTreeOperations.searchNearestNeighbour(root.left, dataPoint, minDist, bestNode);
+    }
+    if (KDTreeOperations.euclidianDistance(root.left.dataPoint, dataPoint) < KDTreeOperations.euclidianDistance(root.right.dataPoint, dataPoint)) {
+      bestNode = KDTreeOperations.searchNearestNeighbour(root.left, dataPoint, minDist, bestNode);
+    } else {
+      bestNode = KDTreeOperations.searchNearestNeighbour(root.right, dataPoint, minDist, bestNode);
+    }
+    return bestNode;
+  }
+
+  static euclidianDistance(a, b) {
+    if (a === null || b === null) {
+      return Number.MAX_VALUE;
+    }
+    return Math.sqrt((b[1] - a[1]) * (b[1] - a[1]) + (b[0] - a[0]) * (b[0] - a[0]));
+  }
+}
+
+
+function Grid({ num }) {
+  const [kdTreeNodes, setKDTreeNodes] = useState([]);
+  const [xdivisiveLines, setXdivisiveLines] = useState([]);
+  const [ydivisveLines, setYdivisiveLines] = useState([]);
+
+  useEffect(() => {
+    const kdTree = new KDTree();
+    kdTree.insert([1, 1]);
+    kdTree.insert([10, 2]);
+    kdTree.insert([3, 6]);
+    kdTree.insert([17, 15]);
+
+
+    const nodes = [];
+    const lines = [];
+
+    // Function to traverse the KD tree and collect nodes and divisive lines for visualization
+    const traverseKDTree = (node) => {
+      if (node) {
+        nodes.push({ x: node.dataPoint[0], y: node.dataPoint[1], isDivisive: node.left || node.right });
+        if (node.left || node.right) {
+          lines.push(node.dataPoint[0]);
+        }
+        traverseKDTree(node.left);
+        traverseKDTree(node.right);
+      }
+    };
+
+    traverseKDTree(kdTree.root);
+    setKDTreeNodes(nodes);
+    setXdivisiveLines(lines);
+    setYdivisiveLines(lines);
+  }, [num]);
+
   const [gridItems, setGridItems] = useState([]);
-  console.log("holaa", x)
 
   useEffect(() => {
     const rows = [];
     for (let i = 0; i < num; i++) {
       const squares = [];
       for (let j = 0; j < num; j++) {
-        // Determine if the current square is at the specified (x, y) coordinates
-        const isRedDot = i === y && j === x;
+        const isKDTreeNode = kdTreeNodes.some(node => node.x === j && node.y === i);
+        const isXDivisiveLine = xdivisiveLines.includes(i);
+        const isYDivisiveLine = ydivisveLines.includes(j);
+
         squares.push(
           <div
-            key={j}
-            className={`square ${isRedDot ? 'redDot' : ''}`}
+            key={`${i}-${j}`}
+            className={`square ${isKDTreeNode ? 'kdTreeNode' : ''}`}
+            style={{
+              backgroundColor: isKDTreeNode ? 'green' : 'white',
+              borderRight: isYDivisiveLine ? '2px solid red' : 'none',
+              borderBottom: isXDivisiveLine ? '2px solid red' : 'none',
+            }}
           ></div>
         );
       }
@@ -31,74 +182,196 @@ function Grid({ num, x, y }) {
       );
     }
     setGridItems(rows);
-  }, [num, x, y]);
+  }, [num, kdTreeNodes, xdivisiveLines]);
 
   return <div className="grid">{gridItems}</div>;
 }
 
 
-
-function NumberInputButton() {
+//input button
+function NumberInputButton({texto}) {
   const [numOne, setNumOne] = useState(''); // State for the first input value
   const [numTwo, setNumTwo] = useState(''); // State for the second input value
-  const [x, setX] = useState(null); // State for x coordinate
-  const [y, setY] = useState(null); // State for y coordinate
 
-  const handleInputChange = (e, setValue) => {
-    setValue(e.target.value); // Update the respective state with input value
-  };
 
-  const handleButtonClick = () => {
-    // Convert numOne and numTwo to integers
-    const parsedNumOne = parseInt(numOne);
-    const parsedNumTwo = parseInt(numTwo);
-    console.log(parsedNumOne, parsedNumTwo)
-    // Check if both inputs are valid numbers
-    if (!isNaN(parsedNumOne) && !isNaN(parsedNumTwo)) {
-      setX(parsedNumOne); // Set x coordinate
-      setY(parsedNumTwo); // Set y coordinate
+  const handleCoordinateSubmit = () => {
+    const xCoordinate = parseInt(numOne);
+    const yCoordinate = parseInt(numTwo);
+
+    if (!isNaN(xCoordinate) && !isNaN(yCoordinate)) {
+      console.log(`Entered coordinate: (${xCoordinate}, ${yCoordinate})`);
+      
     } else {
-      console.log('Please enter valid numbers.'); // Handle invalid input
+      console.log('Please enter valid numbers for both coordinates.');
     }
   };
 
   return (
     <div className="numberInputButton">
       <div className="numberInput">
+        <h1>{texto}</h1>
         <input
           type="text"
-          placeholder="Ingresa un número"
+          placeholder="Coordenada x"
           value={numOne}
-          onChange={(e) => handleInputChange(e, setNumOne)}
+          onChange={(e) => setNumOne(e.target.value)}
         />
       </div>
       <div className="numberInput">
         <input
           type="text"
-          placeholder="Ingresa un número"
+          placeholder="Coordenada y"
           value={numTwo}
-          onChange={(e) => handleInputChange(e, setNumTwo)}
+          onChange={(e) => setNumTwo(e.target.value)}
         />
       </div>
       <div className="button">
-        <button type="button" onClick={handleButtonClick}>
-          Enviar
+        <button type="button" onClick={handleCoordinateSubmit}>
+          Submit
         </button>
       </div>
     </div>
   );
 }
 
+
 function App() {
-  const [x, setX] = useState(null); // State for x coordinate
-  const [y, setY] = useState(null); // State for y coordinate
   return (
     <div className="App">
-      <Grid num={6} x={x} y={y} /> {/* Pass x and y values to Grid */}
-      <NumberInputButton />
+          <div className='row'>
+        <div className='col'>
+        <Grid num={20} />
+
+        </div>
+        <div className='col'>
+        <NumberInputButton texto={'Encontrar nearest neighbour'}/>
+        <NumberInputButton texto={'Probar search'}/>
+        </div>
+
+      </div>
+      
     </div>
   );
 }
 
 
 export default App;
+
+
+
+
+// // test 
+// const kdTree = new KDTree();
+// kdTree.insert([3, 6]);
+// kdTree.insert([17, 15]);
+// kdTree.insert([13, 15]);
+// kdTree.insert([6, 12]);
+// kdTree.insert([9, 1]);
+// kdTree.insert([2, 7]);
+
+// console.log(kdTree.search([6, 12]));
+
+// //nearest neighbour
+// console.log(kdTree.nearestNeighbour([11,12]))
+
+
+
+
+
+// function Grid({ num, x, y }) {
+//   // Create rows and squares dynamically using nested loops
+//   const [gridItems, setGridItems] = useState([]);
+//   console.log("holaa", x)
+
+//   useEffect(() => {
+//     const rows = [];
+//     for (let i = 0; i < num; i++) {
+//       const squares = [];
+//       for (let j = 0; j < num; j++) {
+//         // Determine if the current square is at the specified (x, y) coordinates
+//         const isRedDot = i === y && j === x;
+//         squares.push(
+//           <div
+//             key={j}
+//             className={`square ${isRedDot ? 'redDot' : ''}`}
+//           ></div>
+//         );
+//       }
+//       rows.push(
+//         <div key={i} className="row">
+//           {squares}
+//         </div>
+//       );
+//     }
+//     setGridItems(rows);
+//   }, [num, x, y]);
+
+//   return <div className="grid">{gridItems}</div>;
+// }
+
+
+
+// function NumberInputButton() {
+//   const [numOne, setNumOne] = useState(''); // State for the first input value
+//   const [numTwo, setNumTwo] = useState(''); // State for the second input value
+//   const [x, setX] = useState(null); // State for x coordinate
+//   const [y, setY] = useState(null); // State for y coordinate
+
+//   const handleInputChange = (e, setValue) => {
+//     setValue(e.target.value); // Update the respective state with input value
+//   };
+
+//   const handleButtonClick = () => {
+//     // Convert numOne and numTwo to integers
+//     const parsedNumOne = parseInt(numOne);
+//     const parsedNumTwo = parseInt(numTwo);
+//     console.log(parsedNumOne, parsedNumTwo)
+//     // Check if both inputs are valid numbers
+//     if (!isNaN(parsedNumOne) && !isNaN(parsedNumTwo)) {
+//       setX(parsedNumOne); // Set x coordinate
+//       setY(parsedNumTwo); // Set y coordinate
+//     } else {
+//       console.log('Please enter valid numbers.'); // Handle invalid input
+//     }
+//   };
+
+//   return (
+//     <div className="numberInputButton">
+//       <div className="numberInput">
+//         <input
+//           type="text"
+//           placeholder="Ingresa un número"
+//           value={numOne}
+//           onChange={(e) => handleInputChange(e, setNumOne)}
+//         />
+//       </div>
+//       <div className="numberInput">
+//         <input
+//           type="text"
+//           placeholder="Ingresa un número"
+//           value={numTwo}
+//           onChange={(e) => handleInputChange(e, setNumTwo)}
+//         />
+//       </div>
+//       <div className="button">
+//         <button type="button" onClick={handleButtonClick}>
+//           Enviar
+//         </button>
+//       </div>
+//     </div>
+//   );
+// }
+
+// function App() {
+//   const [x, setX] = useState(null); // State for x coordinate
+//   const [y, setY] = useState(null); // State for y coordinate
+//   return (
+//     <div className="App">
+//       <Grid num={6} x={x} y={y} /> {/* Pass x and y values to Grid */}
+//       <NumberInputButton />
+//     </div>
+//   );
+// }
+
+
+// export default App;

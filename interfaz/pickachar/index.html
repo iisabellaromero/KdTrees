@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <style>
+    .properties{
+        display: none;
+    }
+    .hidden{
+        opacity: 40%;
+        background-color: black;
+    }
+  </style>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <div class="container center">
+        <h1>PikAChar</h1>
+        <h3>Pick a character!</h3>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="card hidden" id="node1" style="width: 18rem;">
+                            <img src="fotos_poke/1.png" class="poke-img w-50 w-50 ard-img-top" alt="...">
+                            <div class="card-body">
+                              <h5 class="card-title">Pikachu</h5>
+                                <div class="properties" id="propnode1">
+                                    <p class="agilidad">Agilidad: <span></span></p>
+                                    <p class="ternua">Ternura:<span></span></p>
+                                    <p class="fuerza">Fuerza: <span></span></p>
+                                    <p class="rapidez">Rapidez: <span></span></p>
+                                    <p class="inteligencia">Inteligencia: <span></span></p>
+                                </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card hidden" id="node2" style="width: 18rem;">
+                            <img src="fotos_poke/2.png" class="poke-img w-50 card-img-top" alt="...">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                                <div class="show-prop properties" id="propnode2">
+                                    <p class="agilidad">Agilidad: <span></span></p>
+                                    <p class="ternua">Ternura:<span></span></p>
+                                    <p class="fuerza">Fuerza: <span></span></p>
+                                    <p class="rapidez">Rapidez: <span></span></p>
+                                    <p class="inteligencia">Inteligencia: <span></span></p>
+                                </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card hidden" id="node3" style="width: 18rem;">
+                            <img src="fotos_poke/3.png" class="poke-img w-50 card-img-top" alt="...">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                                <div class="show-prop properties" id="propnode3">
+                                    <p class="agilidad">Agilidad: <span></span></p>
+                                    <p class="ternua">Ternura:<span></span></p>
+                                    <p class="fuerza">Fuerza: <span></span></p>
+                                    <p class="rapidez">Rapidez: <span></span></p>
+                                    <p class="inteligencia">Inteligencia: <span></span></p>
+                                </div>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="card hidden" id="node4" style="width: 18rem;">
+                            <img src="fotos_poke/4.png" class="poke-img w-50 card-img-top" alt="...">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                                <div class="show-prop properties" id="propnode4">
+                                    <p class="agilidad">Agilidad: <span></span></p>
+                                    <p class="ternua">Ternura:<span></span></p>
+                                    <p class="fuerza">Fuerza: <span></span></p>
+                                    <p class="rapidez">Rapidez: <span></span></p>
+                                    <p class="inteligencia">Inteligencia: <span></span></p>
+                                </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card hidden" id="node5" style="width: 18rem;">
+                            <img src="fotos_poke/5.png" class="poke-img w-50 card-img-top" alt="...">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                                <div class="show-prop properties" id="propnode5">
+                                    <p class="agilidad">Agilidad: <span></span></p>
+                                    <p class="ternua">Ternura:<span></span></p>
+                                    <p class="fuerza">Fuerza: <span></span></p>
+                                    <p class="rapidez">Rapidez: <span></span></p>
+                                    <p class="inteligencia">Inteligencia: <span></span></p>
+                                </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card hidden" id="node6" style="width: 18rem;">
+                            <img src="fotos_poke/6.png" class="poke-img w-50 card-img-top" alt="...">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                                <div class="show-prop properties" id="propnode6">
+                                    <p class="agilidad">Agilidad: <span></span></p>
+                                    <p class="ternua">Ternura:<span></span></p>
+                                    <p class="fuerza">Fuerza: <span></span></p>
+                                    <p class="rapidez">Rapidez: <span></span></p>
+                                    <p class="inteligencia">Inteligencia: <span></span></p>
+                                </div>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4"><div  id="node7"class="card hidden" style="width: 18rem;">
+                        <img src="fotos_poke/7.png" class="poke-img w-50 card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">Card title</h5>
+                          <div class="show-prop properties" id="propnode7">
+                            <p class="agilidad">Agilidad: <span></span></p>
+                            <p class="ternua">Ternura:<span></span></p>
+                            <p class="fuerza">Fuerza: <span></span></p>
+                            <p class="rapidez">Rapidez: <span></span></p>
+                            <p class="inteligencia">Inteligencia: <span></span></p>
+                        </div>
+                    </div>
+                        
+                    </div>
+                </div>
+                    <div class="col-4">
+                        <div class="card hidden" id="node8" style="width: 18rem;">
+                            <img src="fotos_poke/8.png" class="poke-img w-50 card-img-top" alt="...">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                                <div class="show-prop properties" id="propnode8">
+                                    <p class="agilidad">Agilidad: <span></span></p>
+                                    <p class="ternua">Ternura:<span></span></p>
+                                    <p class="fuerza">Fuerza: <span></span></p>
+                                    <p class="rapidez">Rapidez: <span></span></p>
+                                    <p class="inteligencia">Inteligencia: <span></span></p>
+                                </div>
+                            </div>
+                          </div>
+
+                    </div>
+                    <div class="col-4">
+                        <div class="card hidden" id="node9" style="width: 18rem;">
+                            <img src="fotos_poke/9.png" class="poke-img w-50 card-img-top" alt="...">
+                            <div class="card-body">
+                              <h5 class="card-title">Card title</h5>
+                                <div class="show-prop properties" id="propnode9">
+                                    <p class="agilidad">Agilidad: <span></span></p>
+                                    <p class="ternua">Ternura:<span></span></p>
+                                    <p class="fuerza">Fuerza: <span></span></p>
+                                    <p class="rapidez">Rapidez: <span></span></p>
+                                    <p class="inteligencia">Inteligencia: <span></span></p>
+                                </div>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+
+                <div class="container">
+            
+                    <form class="form" id="miFormulario" onsubmit="procesarDatos(event)">
+                        <label for="numero1">Agilidad (1-10):</label>
+                        <input type="number" id="numero1" name="numero1" min="1" max="10" required><br><br>
+                    
+                        <label for="numero2">Ternura (1-10):</label>
+                        <input type="number" id="numero2" name="numero2" min="1" max="10" required><br><br>
+                    
+                        <label for="numero3">Fuerza (1-10):</label>
+                        <input type="number" id="numero3" name="numero3" min="1" max="10" required><br><br>
+                    
+                        <label for="numero4">Rapidez (1-10):</label>
+                        <input type="number" id="numero4" name="numero4" min="1" max="10" required><br><br>
+                    
+                        <label for="numero5">Inteligencia (1-10):</label>
+                        <input type="number" id="numero5" name="numero5" min="1" max="10" required><br><br>
+                    
+                        <button class="btn btn-primary" type="submit">Enviar</button>
+                
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+          
+    </div>
+</body>
+<script type="text/javascript">
+   class KDTree{
+    constructor(){
+        this.root = null;
+    }
+
+    insert(dataPoint){
+        this.root = KDTreeOperations.insert(this.root, dataPoint);
+    }
+
+    search(dataPoint){
+        return KDTreeOperations.search(this.root, dataPoint);
+    }
+
+    nearestNeighbour(dataPoint){
+        return KDTreeOperations.nearestNeighbour(this.root, dataPoint);
+    }
+}
+
+class KDTreeNode {
+    constructor(point) {
+        this.dataPoint = new Array(2);
+        for (let i = 0; i < point.length; i++) {
+            this.dataPoint[i] = point[i];
+        }
+        this.left = null;
+        this.right = null;
+    }
+}
+
+KDTreeNode.DIMENSION = 2;
+
+class KDTreeOperations {
+    static insertNode(root, dataPoint, depth) {
+      if (root === null) {
+        return new KDTreeNode(dataPoint);
+      }
+      const currentDimension = depth % KDTreeNode.DIMENSION;
+      if (dataPoint[currentDimension] < root.dataPoint[currentDimension]) {
+        root.left = KDTreeOperations.insertNode(root.left, dataPoint, depth + 1);
+      } else {
+        root.right = KDTreeOperations.insertNode(root.right, dataPoint, depth + 1);
+      }
+      return root;
+    }
+  
+    static insert(root, dataPoint) {
+      return KDTreeOperations.insertNode(root, dataPoint, 0);
+    }
+  
+    static arePointsEqual(point1, point2) {
+      for (let i = 0; i < KDTreeNode.DIMENSION; ++i) {
+        if (point1[i] !== point2[i]) {
+          return false;
+        }
+      }
+      return true;
+    }
+  
+    static search(root, dataPoint) {
+      return KDTreeOperations.searchNode(root, dataPoint, 0);
+    }
+  
+    static searchNode(root, dataPoint, depth) {
+      if (root === null) {
+        return false;
+      }
+      if (KDTreeOperations.arePointsEqual(root.dataPoint, dataPoint)) {
+        return true;
+      }
+      const currentDimension = depth % KDTreeNode.DIMENSION;
+      if (dataPoint[currentDimension] < root.dataPoint[currentDimension]) {
+        return KDTreeOperations.searchNode(root.left, dataPoint, depth + 1);
+      } else {
+        return KDTreeOperations.searchNode(root.right, dataPoint, depth + 1);
+      }
+    }
+  
+    static nearestNeighbour(root, dataPoint) {
+      return KDTreeOperations.searchNearestNeighbour(root, dataPoint, Number.MAX_VALUE, root);
+    }
+  
+    static searchNearestNeighbour(root, dataPoint, minDist, bestNode) {
+      if (root === null) {
+        return bestNode;
+      }
+      const distanceFromNode = KDTreeOperations.euclidianDistance(root.dataPoint, dataPoint);
+      if (KDTreeOperations.euclidianDistance(root.dataPoint, dataPoint) < minDist) {
+        minDist = distanceFromNode;
+        bestNode = root;
+      }
+      if (root.left === null) {
+        return KDTreeOperations.searchNearestNeighbour(root.right, dataPoint, minDist, bestNode);
+      }
+      if (root.right === null) {
+        return KDTreeOperations.searchNearestNeighbour(root.left, dataPoint, minDist, bestNode);
+      }
+      if (KDTreeOperations.euclidianDistance(root.left.dataPoint, dataPoint) < KDTreeOperations.euclidianDistance(root.right.dataPoint, dataPoint)) {
+        bestNode = KDTreeOperations.searchNearestNeighbour(root.left, dataPoint, minDist, bestNode);
+      } else {
+        bestNode = KDTreeOperations.searchNearestNeighbour(root.right, dataPoint, minDist, bestNode);
+      }
+      return bestNode;
+    }
+  
+    static euclidianDistance(a, b) {
+      if (a === null || b === null) {
+        return Number.MAX_VALUE;
+      }
+      return Math.sqrt((b[1] - a[1]) * (b[1] - a[1]) + (b[0] - a[0]) * (b[0] - a[0]));
+    }
+  }
+
+
+  // test 
+    const kdTree = new KDTree();
+    const valoresPokemon = [
+    [6, 8, 9, 4, 2],
+    [3, 7, 9, 10, 5],
+    [10, 2, 4, 9, 1],
+    [8, 5, 6, 3, 7],
+    [2, 4, 6, 1, 10],
+    [9, 7, 3, 8, 5],
+    [7, 1, 8, 5, 4],
+    [4, 6, 2, 10, 9],
+    [5, 10, 1, 7, 3]
+];
+
+  //crea un diccionario
+   
+
+    const node1 = new KDTreeNode([6, 8, 9, 4, 2]);
+    const node2 = new KDTreeNode([3, 7, 9, 10, 5]);
+    const node3 = new KDTreeNode([10, 2, 4, 9, 1]);
+    const node4 = new KDTreeNode([8, 5, 6, 3, 7]);
+    const node5 = new KDTreeNode([2, 4, 6, 1, 10]);
+    const node6 = new KDTreeNode([9, 7, 3, 8, 5]);
+    const node7 = new KDTreeNode([7, 1, 8, 5, 4]);
+    const node8 = new KDTreeNode([4, 6, 2, 10, 9]);
+    const node9 = new KDTreeNode([5, 10, 1, 7, 3]);
+
+    const properties = document.getElementsByClassName("properties");
+
+// Recorrer cada elemento con la clase "properties"
+
+// Recorrer cada elemento con la clase "properties"
+for (let i = 0; i < properties.length; i++) {
+    // Obtener los párrafos dentro de cada elemento "properties"
+    const p = properties[i].getElementsByTagName("p");
+
+    // Obtener los valores del Pokémon actual
+    const valores = valoresPokemon[i];
+
+    // Verificar si hay suficientes valores para el Pokémon actual
+    if (valores && valores.length === p.length) {
+        // Recorrer los párrafos y asignar los valores correspondientes
+        for (let j = 0; j < p.length; j++) {
+            // Obtener el span dentro del párrafo actual
+            const span = p[j].querySelector('span');
+            if (span) {
+                // Asignar el valor al texto del span
+                span.textContent = valores[j];
+            }
+        }
+    }
+}
+
+    kdTree.insert(node1.dataPoint);
+    kdTree.insert(node2.dataPoint);
+    kdTree.insert(node3.dataPoint);
+    kdTree.insert(node4.dataPoint);
+    kdTree.insert(node5.dataPoint);
+    kdTree.insert(node6.dataPoint);
+    kdTree.insert(node7.dataPoint);
+    kdTree.insert(node8.dataPoint);
+    kdTree.insert(node9.dataPoint);
+
+    
+  //nearest neighbour
+
+    
+    function procesarDatos(evento) {
+        const valoresPokemon = [
+    [6, 8, 9, 4, 2],
+    [3, 7, 9, 10, 5],
+    [10, 2, 4, 9, 1],
+    [8, 5, 6, 3, 7],
+    [2, 4, 6, 1, 10],
+    [9, 7, 3, 8, 5],
+    [7, 1, 8, 5, 4],
+    [4, 6, 2, 10, 9],
+    [5, 10, 1, 7, 3]
+];
+
+
+
+        const diccionario = {
+        "node1":valoresPokemon[0],
+        "node2":valoresPokemon[1],
+        "node3":valoresPokemon[2],
+        "node4":valoresPokemon[3],
+        "node5":valoresPokemon[4],
+        "node6":valoresPokemon[5],
+        "node7":valoresPokemon[6],
+        "node8":valoresPokemon[7],
+        "node9":valoresPokemon[8]
+        };
+      evento.preventDefault(); // Evita el comportamiento de envío predeterminado del formulario
+
+      // Obtener los valores de entrada
+      const n1 = document.getElementById('numero1').value;
+      const n2 = document.getElementById('numero2').value;
+      const n3 = document.getElementById('numero3').value;
+      const n4 = document.getElementById('numero4').value;
+      const n5 = document.getElementById('numero5').value;
+
+      // Registrar o procesar los datos de entrada
+      console.log("Número 1:", n1);
+      console.log("Número 2:", n2);
+      console.log("Número 3:", n3);
+      console.log("Número 4:", n4);
+      console.log("Número 5:", n5);
+
+      const nearestNeighbour= kdTree.nearestNeighbour([n1,n2,n3,n4,n5])
+        
+      console.log(nearestNeighbour);
+     nearest = nearestNeighbour.dataPoint;
+
+        // find by value in dict
+        const key = Object.keys(diccionario).find(key => JSON.stringify(diccionario[key]) === JSON.stringify(nearest));
+        console.log(key);
+        const propKey = `prop${key}`;
+        console.log(propKey)
+
+        // show card
+        document.getElementById(key).classList.remove("hidden");
+        document.getElementById(propKey).classList.remove("properties")
+
+        //after 30 seconds, go back 
+        setTimeout(function(){ 
+            document.getElementById(key).classList.add("hidden");
+            document.getElementById(propKey).classList.add("properties")
+        }, 5);
+      
+    }
+
+
+    </script>
+</html>
